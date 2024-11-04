@@ -1,0 +1,38 @@
+DAY 5 HOMEWORK
+--SELECT * FROM BikeStore.LESSON.CUSTOMERS
+
+--LESSON.CUSTOMERS
+SELECT * FROM LESSON.CUSTOMERS
+
+--find customers whose age between 20 and 27
+SELECT * FROM LESSON.CUSTOMERS
+WHERE AGE between 20 and 27   --8
+
+--find customers whose salary is less than equal to 122800
+SELECT * FROM LESSON.CUSTOMERS
+WHERE SALARY <= 122800   --5
+
+--find out max,min,avg salary
+SELECT MAX(SALARY) as Max_Sal, MIN(SALARY) as Min_Sal, AVG(SALARY) as Avg_Sal FROM LESSON.CUSTOMERS
+
+--SELECT * FROM LEVELUP.Loan_Dataset
+
+--find out how many customers has credit score between 600 to 700
+SELECT COUNT(*) FROM LEVELUP.Loan_Dataset
+WHERE Credit_Score between 600 and 700   --12
+
+--find out what is max,min,avg loan amount whose credit score between 700 to 800
+SELECT MAX(Loan_Amount) as Max_Loan, MIN(Loan_Amount) as Min_Loan, AVG(Loan_Amount) as Avg_Loan FROM LEVELUP.Loan_Dataset
+WHERE Credit_Score between 700 and 800    --2500000, 7000, 358600
+
+--find out what is max,min,avg loan amount whose credit score between 600 to 700
+SELECT MAX(Loan_Amount) as Max_Loan, MIN(Loan_Amount) as Min_Loan, AVG(Loan_Amount) as Avg_Loan FROM LEVELUP.Loan_Dataset
+WHERE Credit_Score between 600 and 700    --3200000, 4000, 295416
+
+--find out what is max,min,avg income amount whose credit score between 700 to 800
+SELECT MAX(Income) as Max_Income, MIN(Income) as Min_Income, AVG(Income) as Avg_Income FROM LEVELUP.Loan_Dataset
+WHERE Credit_Score between 700 and 800   --200000, 35000, 97500
+
+--find out what is max,min,avg income amount whose credit score between 600 to 700
+SELECT MAX(Income) as Max_Income, MIN(Income) as Min_Income, AVG(Income) as Avg_Income FROM LEVELUP.Loan_Dataset
+WHERE Credit_Score between 600 and 700   --120000, 35000, 72083
