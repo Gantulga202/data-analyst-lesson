@@ -1,0 +1,31 @@
+DAY 6 DML - DATA MANIPULATION LANGUAGE
+
+UPDATE dbo.student SET Country='MONGOLIA'
+WHERE id=13
+
+UPDATE dbo.student SET Phone='123-456-7890'
+WHERE firstName = 'Erdenetuya' and LastName = 'Chuluunbaatar' and PostalCode = '94597'
+
+DELETE dbo.student WHERE PostalCode = '22202'
+
+UPDATE dbo.student SET Phone = '123-456-7890' 
+WHERE id = 333
+
+UPDATE dbo.student SET LastName = 'DONALD'
+WHERE id = 333
+
+UPDATE dbo.student SET id = 01
+WHERE id = 333
+
+UPDATE dbo.student SET Title = 'STUDENT'
+WHERE Title = 'Student'
+
+DELETE dbo.student WHERE Country = 'usa'
+
+SELECT TOP(10) * FROM dbo.student order by height asc
+
+SELECT * FROM dbo.student order by LastName asc
+SELECT * FROM dbo.student order by LastName desc
+
+SELECT * FROM dbo.student order by Hiredate asc
+SELECT * FROM dbo.student order by Hiredate desc
