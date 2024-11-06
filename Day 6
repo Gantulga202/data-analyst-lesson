@@ -29,3 +29,36 @@ SELECT * FROM dbo.student order by LastName desc
 
 SELECT * FROM dbo.student order by Hiredate asc
 SELECT * FROM dbo.student order by Hiredate desc
+
+--How to get full name based on first and last name? 
+SELECT first_name +' '+ last_name as full_name from sales.customers
+
+--How to calculate sale price based on list_price?
+SELECT (list_price + (list_price * 0.15)) as sales_Price, * FROM sales.order_items
+
+--How to find out exact sale price after discount and tax? 
+SELECT (list_price *  (1 - discount)) * 1.06 as total_salePrice, * FROM sales.order_items
+
+SELECT LOWER(LTRIM(RTRIM(LastName))), * FROM dbo.student
+SELECT * FROM dbo.student
+
+SELECT LEFT(firstName, 4), * FROM dbo.student
+SELECT RIGHT(firstName, 2) as first_name_last_2_letter, * FROM dbo.student
+
+SELECT LEN(firstName) as firstName_length, LEN(Address) as address_lenght, * FROM dbo.student order by address_lenght desc
+
+--TASKS 
+
+SELECT TOP 5 * FROM sales.order_items order by list_price desc
+
+SELECT * FROM sales.order_items
+WHERE discount < 0.07
+
+SELECT DISTINCT(list_price), * FROM sales.order_items
+WHERE list_price > 599
+
+SELECT * FROM sales.order_items
+WHERE list_price < 700 and discount = '0.2'
+
+SELECT * FROM sales.customers
+WHERE email like '%yahoo.com' and state in ('NY', 'CA') and zip_code in ('14127', '11952')  --7
