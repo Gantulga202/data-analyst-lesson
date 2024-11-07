@@ -1,0 +1,92 @@
+-- DATE and TIME manipulation
+
+SELECT GETDATE()  --2024-11-06 23:51:28.127
+
+SELECT YEAR(GETDATE())  --2024
+
+SELECT MONTH(GETDATE()) --11
+
+SELECT * FROM sales.orders
+
+--What is the total order in 2016?
+SELECT * FROM sales.orders
+WHERE YEAR(order_date) = '2016'
+
+SELECT * FROM sales.orders
+WHERE MONTH(order_date) = '2'
+
+SELECT * FROM sales.orders
+WHERE MONTH( order_date ) = '5' or MONTH( order_date ) = '6' --217
+
+SELECT FORMAT( GETDATE(), 'dd/MM/yyyy' ) as date
+
+SELECT FORMAT( required_date, 'MM/dd/yyyy' ), required_date FROM sales.orders  --dd means show day 
+
+SELECT FORMAT( required_date, 'MM/ddd/yyyy' ), required_date FROM sales.orders  -- ddd means shows Mon, Tue, Wed ...
+
+SELECT FORMAT( required_date, 'MM/dd/yyyy hh-mm-ss' ), required_date FROM sales.orders
+
+SELECT GETDATE()
+
+SELECT DATEADD ( month, 4, getdate() )
+
+SELECT DATEADD( week, 13, getdate() )
+
+SELECT DATEADD( MONTH, -3, GETDATE() )  --2024-08-07 00:18:20.400
+SELECT DATEADD( DAY, -5, GETDATE() )  --2024-11-02 00:18:48.273
+SELECT DATEADD( YEAR, -2, GETDATE() )  --2022-11-07 00:19:29.820
+
+SELECT GETDATE() order_date, DATEADD( HOUR, 48, GETDATE() ) as will_delivery
+
+--TASK 1
+ 
+SELECT top 10 * FROM LESSON.loan_data
+
+SELECT COUNT(*) FROM LESSON.loan_data
+WHERE MONTH( ApprovalDate ) = 5   --15580
+
+SELECT COUNT(*) FROM LESSON.loan_data
+WHERE YEAR( ApprovalDate ) = 2020    --39125
+
+SELECT COUNT(*) FROM LESSON.loan_data
+WHERE YEAR(ApprovalDate) = 2020 and MONTH(ApprovalDate) = 6   --2260
+
+SELECT COUNT(*) FROM LESSON.loan_data
+WHERE DAY(ApprovalDate) = 02    --5971
+
+SELECT COUNT(*) FROM LESSON.loan_data
+WHERE GrossApproval > 300000  --82909
+
+--TASK 2
+
+SELECT * FROM sales.customers
+
+SELECT DISTINCT * FROM sales.customers 
+WHERE state = 'NY'
+
+SELECT * FROM sales.customers
+WHERE state not in ('NY', 'TX')
+
+SELECT * FROM sales.customers
+WHERE email not like '%gmail.com'
+
+SELECT * FROM sales.customers
+WHERE email like '%yahoo.com'
+
+SELECT COUNT(*) FROM sales.customers
+WHERE state = 'VA' and zip_code = '14450'  --0
+
+SELECT COUNT(*) FROM sales.customers
+WHERE city like '%city%'   --14
+
+SELECT * FROM sales.customers
+WHERE first_name like 'b%t'
+
+SELECT * FROM sales.order_items
+WHERE list_price = 999.99      --161
+
+SELECT * FROM sales.order_items
+WHERE list_price between 500 and 1500   --1563
+
+SELECT SUM(list_price) as totalPrice FROM production.products 
+WHERE brand_id = 5   --749.99
