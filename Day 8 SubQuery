@@ -1,0 +1,81 @@
+SELECT * FROM sales.customers
+WHERE phone is null					--1266 empty data
+
+SELECT * FROM sales.customers
+WHERE phone = ''					--1 space avsan ymu ymar neg bdlar hooson uldeesen zai
+
+SELECT * FROM sales.customers
+WHERE phone is null or phone = ''	--1267 this is the correct way to search empty space
+
+SELECT * FROM sales.customers
+WHERE phone is not null and phone != ''
+
+SELECT * FROM sales.customers
+WHERE city = 'Campbell'								--10
+
+SELECT COUNT(*) FROM sales.customers
+WHERE zip_code in ( '22209', '22201', '22555' )		--0
+
+--SUBQUERY
+
+SELECT * FROM sales.customers 
+WHERE LEN( street ) = (
+SELECT MAX( LEN(street)) FROM sales.customers 
+)
+
+SELECT salary FROM LEVELUP.employees order by salary desc
+
+SELECT MAX(salary) FROM LEVELUP.employees WHERE salary < (
+SELECT MAX(salary) FROM LEVELUP.employees)
+
+--SHOW THIRD HIGH SALARY FROM [LEVELUP].[employees]
+SELECT MAX(salary) FROM LEVELUP.employees WHERE salary < (
+SELECT MAX(salary) FROM LEVELUP.employees WHERE salary < (
+SELECT MAX(salary) FROM LEVELUP.employees)
+)
+
+--SHOW ME EMP WHOSE SALARY GREATER THAN EMPLOYEE_ID = 103
+SELECT COUNT(*) FROM LEVELUP.employees 
+WHERE salary > (
+SELECT salary FROM LEVELUP.employees WHERE employee_id = 103
+)				--10
+
+--HOW TO GET FIND ONLY ORDERS THAT LIVES CA ZIP CODE 95008
+SELECT * FROM sales.orders WHERE customer_id in (
+SELECT customer_id FROM sales.customers WHERE zip_code = '95008'
+)				--13
+
+--HOW TO GET PRODUCT NAME THAT STOCK LESS THAN 10 PIECES
+SELECT product_name FROM production.products WHERE product_id in (
+SELECT product_id FROM production.stocks WHERE quantity < 10
+)   --221
+
+--HOW TO GET FIND ONLY ORDERS WHO LIVES IN LIVES CA AND ZIP CODE 95008
+SELECT * FROM sales.orders WHERE customer_id in (
+SELECT customer_id FROM sales.customers WHERE zip_code = '95008')    --13
+
+--HOW TO GET PRODUCT NAME THAT STOCK LESS THAN 15 PIECES
+SELECT product_name FROM production.products WHERE product_id in (
+SELECT product_id FROM production.stocks WHERE quantity < 15)    --263
+
+--HOW TO PRODUCTS NAME THAT 20% DISCOUNTED
+SELECT product_name FROM production.products WHERE product_id in (
+SELECT product_id FROM sales.order_items WHERE discount = 0.2 )    --219
+
+--HOW TO GET TOP 10 STOCKED PRODUCTS
+SELECT TOP 10 * FROM production.stocks order by quantity desc
+
+--HOW TO GET OUT OF STOCKS PRODUCT
+SELECT * FROM production.stocks WHERE quantity = 0  --25
+
+--WHAT IS EMP NAMES WHO IS WORKING UNDER IT DEPARTMENT
+SELECT first_name FROM LEVELUP.employees WHERE department_id in (
+SELECT department_id FROM LEVELUP.departments WHERE department_name = 'IT')
+
+--FIND FIRST_NAME, LAST_NAME AND EMAILS OF EMP WHO WORK IN THE SAME DEPARTMENT AS 'NEENA KOCHHAR'
+SELECT first_name, last_name, email FROM LEVELUP. employees WHERE department_id = (
+SELECT department_id FROM LEVELUP.employees WHERE first_name = 'Neena' and last_name = 'kochhar')  --3
+
+--FIND EMP WHOSE SALARY IS ABOVE THE AVG SALARY OF THE ENTIRE COMPANY
+SELECT first_name, last_name FROM LEVELUP.employees WHERE salary > (
+SELECT AVG(salary) FROM LEVELUP.employees )  --17
