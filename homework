@@ -1,4 +1,5 @@
-DAY 5 HOMEWORK
+-------------DAY 5 HOMEWORK
+
 --SELECT * FROM BikeStore.LESSON.CUSTOMERS
 
 --LESSON.CUSTOMERS
@@ -36,3 +37,19 @@ WHERE Credit_Score between 700 and 800   --200000, 35000, 97500
 --find out what is max,min,avg income amount whose credit score between 600 to 700
 SELECT MAX(Income) as Max_Income, MIN(Income) as Min_Income, AVG(Income) as Avg_Income FROM LEVELUP.Loan_Dataset
 WHERE Credit_Score between 600 and 700   --120000, 35000, 72083
+
+-----------Day 6 HOMEWORK
+
+SELECT RIGHT(first_name, 5), * FROM production.customers
+
+SELECT RIGHT(last_name, 4), * FROM production.customers
+
+SELECT LEN(first_name) as firstNameLength, * FROM production.customers order by firstNameLength desc --11
+
+SELECT LEN(first_name) as firstNameLength, * FROM production.customers order by firstNameLength asc --2
+
+SELECT UPPER(RTRIM(LTRIM(first_name))) as firstName_fixed, * FROM production.customers
+
+SELECT LOWER(RTRIM(LTRIM(first_name))) as lastName_fixed, * FROM production.customers
+
+SELECT UPPER((RTRIM(LTRIM(first_name))) + ' ' + (RTRIM(LTRIM(first_name)))) as fullName_fixed FROM production.customers
