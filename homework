@@ -53,3 +53,27 @@ SELECT UPPER(RTRIM(LTRIM(first_name))) as firstName_fixed, * FROM production.cus
 SELECT LOWER(RTRIM(LTRIM(first_name))) as lastName_fixed, * FROM production.customers
 
 SELECT UPPER((RTRIM(LTRIM(first_name))) + ' ' + (RTRIM(LTRIM(first_name)))) as fullName_fixed FROM production.customers
+
+-----------Day 7 HOMEWORK
+
+SELECT first_name + ' ' + last_name as Full_name FROM sales.customers
+WHERE zip_code = 14127
+
+SELECT COUNT(DISTINCT(customer_id)) FROM sales.orders  --1445
+
+SELECT MAX(list_price) as Max, MIN(list_price) as Min, AVG(list_price) as Avg FROM sales.order_items
+
+SELECT TOP 1 * FROM sales.customers order by LEN(street) desc
+SELECT MAX( LEN(street) ) FROM sales.customers
+
+SELECT LEFT(first_name, 5), first_name FROM production.customers
+
+SELECT RIGHT(last_name, 4), last_name FROM production.customers
+
+SELECT MAX( LEN(first_name) ) FROM production.customers  --11
+
+SELECT MIN( LEN(first_name) ) FROM production.customers  --2
+
+SELECT UPPER(first_name) FROM production.customers
+
+SELECT LOWER(first_name) FROM production.customers
