@@ -77,3 +77,36 @@ SELECT MIN( LEN(first_name) ) FROM production.customers  --2
 SELECT UPPER(first_name) FROM production.customers
 
 SELECT LOWER(first_name) FROM production.customers
+
+-----------Day 8 HOMEWORK
+
+--1. Get orders data for customers living in the 90278 area with a Gmail email address and orders that have been shipped.
+SELECT * FROM [sales].[orders] WHERE shipped_date is not NULL and customer_id in (
+SELECT customer_id FROM sales.customers WHERE zip_code = '90278' and email like '%gmail.com'
+)    --1  
+
+--2. Find orders for customers who reside in New York (NY) with a ZIP code of 11050.
+SELECT * FROM [sales].[orders] WHERE customer_id in (
+SELECT customer_id FROM [sales].[customers] WHERE state = 'NY' and zip_code = '11050'
+)   --12
+
+--3. List product names that have a stock quantity of less than 5 pieces.
+SELECT product_name FROM [production].[products] WHERE product_id in (
+SELECT product_id FROM [production].[stocks] WHERE quantity < 5
+)    --138
+
+--4. Show product names that have a 7% discount applied. (Assuming you are working with sales.order_items and production.products tables.)
+SELECT product_name FROM [production].[products] WHERE product_id in (
+SELECT product_id FROM [sales].[order_items] WHERE discount = 0.07
+)     --213
+
+--5. Find the first_name, last_name, department_id of employees who work in the same department as the employee with the lowest salary.
+SELECT first_name, last_name, department_id FROM [LEVELUP].[employees] WHERE department_id = (
+SELECT TOP 1 department_id FROM [LEVELUP].[employees] order by salary asc
+)    --6
+
+--6. Find first_name, last_name, salary employees who have a salary greater than the highest salary in the "Accounting" department
+SELECT first_name, last_name FROM [LEVELUP].[employees] WHERE salary > (
+SELECT MAX(salary) FROM [LEVELUP].[employees] WHERE department_id = (
+SELECT department_id FROM [LEVELUP].[departments] WHERE department_name = 'Accounting'
+))    --6
