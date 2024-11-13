@@ -1,0 +1,80 @@
+--HOW MANY CUSTOMERS WE HAVE EACH STATE? use GROUP BY
+SELECT COUNT(*), state FROM [sales].[customers] GROUP BY STATE
+
+--HOW MANY CUSTOMERS WE HAVE EACH CITY? use GROUP BY
+SELECT TOP 10 COUNT(*), city FROM [sales].[customers] GROUP BY city ORDER BY 1 DESC
+
+--HOW MANY CUSTOMERS WE HAVE EACH ZIP_CODE? use GROUP BY
+SELECT COUNT(*), zip_code FROM [sales].[customers] GROUP BY zip_code ORDER BY 1 desc
+
+--HOW TO KNOW EACH STORES TOTAL ORDERS INFORMATION
+SELECT COUNT(*), store_id FROM [sales].[orders] GROUP BY store_id ORDER BY 1 desc
+
+--WHICH EMP IS BEST SALES PERSON
+SELECT COUNT(*), staff_id, store_id FROM sales.orders GROUP BY staff_id, store_id ORDER BY 1 desc
+
+--HOW MANY ORDER PLACED EACH CUSTOMER
+SELECT * FROM [sales].[orders]
+SELECT COUNT(*), customer_id FROM [sales].[orders] 
+GROUP BY customer_id ORDER BY 1 desc
+
+--1. Count the number of orders grouped by order_status. Use sales.orders
+SELECT COUNT(*), order_status FROM sales.orders
+GROUP BY order_status
+
+--2. Count the number of orders with order_status = 4 for each month.Use sales.orders
+SELECT COUNT(*) as order_status, MONTH(order_date) as Month FROM sales.orders WHERE order_status = 4
+GROUP BY MONTH(order_date)
+ORDER BY Month asc
+
+--3. Count the number of orders for each year of order_date. Use sales.orders
+SELECT COUNT(*) as Order_status, YEAR(order_date) as YEAR FROM sales.orders 
+GROUP BY YEAR(order_date)
+
+--4. Find the number of employees hired after 1999-01-01 in each department. Use LEVELUP.employees
+SELECT COUNT(*), department_id FROM [LEVELUP].[employees] WHERE hire_date > '1999-01-01'
+GROUP BY department_id
+
+-------TASK
+
+--2: Find the count of products in each brand that have a list_price less than 3500.
+SELECT COUNT(*), brand_id FROM [production].[products] WHERE list_price < 3500
+GROUP BY brand_id
+
+--3: Find the count of products in each category that have a list_price  between 2000 and 6000
+SELECT COUNT(*), category_id FROM [production].[products] WHERE list_price between 2000 and 6000
+GROUP BY category_id
+
+--4: Find the brand_ids that have a model year less than 2017.
+SELECT DISTINCT(brand_id) FROM [production].[products] WHERE model_year < 2017
+
+--5: Count the number of employees in each department.
+SELECT COUNT(*), DEPTNO FROM [LESSON].[EMP]
+GROUP BY DEPTNO
+
+--6: Calculate the average salary for each job title (JOB):
+SELECT AVG(SAL), JOB FROM [LESSON].[EMP] 
+GROUP BY JOB
+
+--7: Find the maximum salary in each department:
+SELECT MAX(SAL), DEPTNO  FROM [LESSON].[EMP]
+GROUP BY DEPTNO
+
+--8: Count the number of employees hired each year:
+SELECT COUNT(*), YEAR(HIREDATE) FROM [LESSON].[EMP]
+GROUP BY YEAR(HIREDATE)
+
+--9: Find the minimum and maximum hire dates for each department:
+SELECT MIN(HIREDATE) as min_hiredate, MAX(HIREDATE) as max_hiredate, DEPTNO FROM [LESSON].[EMP]
+GROUP BY DEPTNO
+
+-------------------------HAVING
+
+SELECT COUNT(*) as Total, order_date FROM sales.orders 
+GROUP BY order_date    --725
+HAVING COUNT(*) >= 5   --38   
+
+--find the max salary for each department
+SELECT MAX(salary), department_id FROM LEVELUP.employees
+GROUP BY department_id
+HAVING MAX(salary) > 7000
