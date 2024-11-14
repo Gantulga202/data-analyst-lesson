@@ -1,0 +1,92 @@
+-------MATH function
+
+SELECT CEILING (3.1)  --4
+SELECT FLOOR (3.9)    --3
+SELECT SQUARE(3)      --9
+SELECT SQRT(9)        --3
+SELECT ROUND(4.2961, 1)  --4.3
+
+SELECT ROUND(list_price, 1) FROM [sales].[order_items]
+
+SELECT ROUND(RAND()*100,0)
+
+-------SQL UNION operator
+
+SELECT * FROM [production].[products] WHERE product_id = 10
+UNION ALL
+SELECT * FROM [production].[products] WHERE product_id = 10
+
+SELECT EmployeeID, LastName, FirstName, HireDate, HomePhone FROM dbo.Employees
+UNION ALL
+SELECT employee_id, last_name, first_name, hire_date, phone_number FROM LEVELUP.employees
+
+SELECT * FROM dbo.products_store_a
+UNION
+SELECT * FROM dbo.products_store_b
+
+----------TASK
+
+SELECT AVG(list_price), category_id FROM [production].[products]
+GROUP BY category_id
+HAVING AVG(list_price) > 1000
+
+SELECT AVG(list_price), COUNT(*), brand_id FROM [production].[products]
+GROUP BY brand_id
+HAVING COUNT(*) >= 5
+
+SELECT SUM(list_price), COUNT(*), model_year FROM [production].[products] 
+GROUP BY model_year
+HAVING COUNT(*) > 10
+
+SELECT AVG(list_price), brand_id, product_id FROM [production].[products]
+WHERE list_price > 500
+GROUP BY brand_id, product_id
+
+--------SQL CASE Expression
+
+SELECT store_id, product_id, quantity,
+CASE
+	WHEN quantity = 30 THEN 'we have full stock'
+	WHEN quantity > 20 and quantity < 30 THEN 'stock is enough'
+	WHEN quantity > 10 and quantity <= 20 THEN 'half stock'
+	WHEN quantity > 5 and quantity <= 10 THEN 'Need to restock asap'
+	WHEN quantity > 1 and quantity <= 5 THEN 'Last 5 stock left'
+	ELSE 'OUT OF STOCK'
+END as stock_size
+FROM [production].[stocks]
+
+SELECT first_name, last_name, email, phone_number, salary, 
+CASE
+	WHEN salary > 10000 THEN 'High Salary'
+	WHEN salary > 5000 and salary <= 10000 THEN 'Mid Salary'
+	WHEN salary > 1000 and salary <= 5000 THEN 'Low Salar'
+	ELSE 'N/A'
+END as salar_info
+FROM [LEVELUP].[employees]
+
+SELECT *,
+CASE
+	WHEN model > 2010 THEN 'NEW'
+	WHEN model between 2000 and 2010 THEN 'AVERAGE'
+	WHEN model between 1990 and 2000 THEN 'OLD'
+	ELSE 'Hog Deer Hay'
+END
+FROM [LESSON].[Cars]
+
+SELECT *,
+CASE
+	WHEN model > 2010 THEN 'NEW'
+	WHEN model > 2000 THEN 'AVERAGE'
+	WHEN model > 1990 THEN 'OLD'
+	ELSE 'Hog Deer Hay'
+END
+FROM [LESSON].[Cars]
+
+SELECT *,
+CASE
+	WHEN job = 'SALESMAN' THEN 'low level'
+	WHEN job = 'MANAGER' THEN 'higher'
+	WHEN job = 'PRESIDENT' THEN 'super level'
+	ELSE 'N/A'
+END
+FROM [LESSON].[EMP]
