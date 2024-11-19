@@ -108,3 +108,35 @@ SELECT first_name, last_name FROM [LEVELUP].[employees] WHERE salary > (
 SELECT MAX(salary) FROM [LEVELUP].[employees] WHERE department_id = (
 SELECT department_id FROM [LEVELUP].[departments] WHERE department_name = 'Accounting'
 ))    --6
+
+-----------Day 9 HOMEWORK
+
+--Write an SQL query to fetch the current date-time from the system.
+SELECT GETDATE ()
+
+--Write an SQL query to fetch TOP 8 highest prices in products.
+SELECT TOP 8 * FROM [production].[products] order by list_price desc
+
+--Write an SQL query to fetch all customers that first name length equal to 10.
+SELECT * FROM [sales].[customers] 
+WHERE LEN(first_name) = 10
+
+--Write a query to find all customer last names whose name:
+-------Begin with A
+SELECT * FROM [sales].[customers] 
+WHERE last_name like 'A%'
+
+-------Ends with S and contains 3 alphabets
+SELECT * FROM [sales].[customers] 
+WHERE last_name like '___S'
+
+-------Start with M and contain 2 alphabets and end with s (total 4 alphabets)
+SELECT * FROM [sales].[customers] 
+WHERE last_name like 'M__s'
+
+--How many unique sales our company did based on order_items table.
+SELECT COUNT(DISTINCT(item_id)) FROM [sales].[order_items]
+
+--Write query that find max, min,avg salary for each job_id use  => levelup.employees.
+SELECT MAX(salary) as max_sal, MIN(salary) as min_sal, AVG(salary) as avg_sal, job_id FROM [LEVELUP].[employees] 
+GROUP BY job_id
