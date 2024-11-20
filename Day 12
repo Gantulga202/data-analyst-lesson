@@ -1,0 +1,46 @@
+SELECT ename, deptno, sal,
+DENSE_RANK() OVER (PARTITION BY deptno ORDER BY sal desc) as sal_rank
+FROM INTERVIEW.employee 
+
+SELECT * FROM [dbo].[student]
+
+--RANK BY HEIGHT
+SELECT *, 
+DENSE_RANK() OVER ( order by height desc ) as height_rank
+FROM [dbo].[student]
+
+--RANK BY HEIGHT IN THE COUNTRY
+SELECT *,
+DENSE_RANK() OVER ( PARTITION BY Country order by height desc )
+FROM [dbo].[student]
+
+-----------JOIN
+
+--INNER JOIN
+SELECT * FROM [sales].[customers]
+JOIN [sales].[orders]
+ON [sales].[customers].customer_id = [sales].[orders].customer_id
+
+--LEFT JOIN
+SELECT * FROM [sales].[customers]
+LEFT JOIN [sales].[orders]
+ON [sales].[customers].customer_id = [sales].[orders].customer_id
+
+--RIGHT JOIN
+SELECT * FROM [sales].[customers]
+RIGHT JOIN [sales].[orders]
+ON [sales].[customers].customer_id = [sales].[orders].customer_id
+
+--FULL JOIN
+SELECT * FROM [sales].[customers]
+FULL JOIN [sales].[orders]
+ON [sales].[customers].customer_id = [sales].[orders].customer_id
+
+--MULTIPLE JOIN
+SELECT * FROM [sales].[customers]
+
+JOIN [sales].[orders]
+ON [sales].[customers].customer_id = [sales].[orders].customer_id
+
+JOIN [sales].[order_items]
+ON [sales].[order_items].order_id = [sales].[orders].order_id
