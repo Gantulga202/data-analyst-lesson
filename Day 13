@@ -74,3 +74,25 @@ GROUP BY [production].[categories].category_name
 SELECT COUNT(*), brand_id FROM [production].[products]
 WHERE model_year < 2018
 GROUP BY brand_id
+
+----------DATEDIFF
+
+SELECT DATEDIFF ( YEAR, '1992/02/06', '2024/11/20' )   --32
+SELECT DATEDIFF ( MONTH, '1992/02/06', '2024/11/20' )  --393
+SELECT DATEDIFF ( DAY, '1992/02/06', '2024/11/20' )    --11976
+SELECT DATEDIFF ( HOUR, '1992/02/06', '2024/11/20' )   --287424
+
+--HOW MANY DAYS SPEND WHEN WE SHIP THE ORDER
+WITH Gan AS (
+SELECT DATEDIFF( DAY, order_date, shipped_date ) as zoruu FROM [sales].[orders] )
+
+SELECT MAX(Gan), MIN(Gan), AVG(Gan) FROM sales.orders
+
+----------CAST /data horvuulene/
+
+SELECT CAST ( 25.65 as varchar )
+
+SELECT OrderDate, CAST ( OrderDate as date ) FROM dbo.Orders
+SELECT OrderDate, CAST ( OrderDate as time ) FROM dbo.Orders
+
+----------SELF JOIN
