@@ -1,0 +1,76 @@
+SELECT * FROM [sales].[customers] as cus
+JOIN [sales].[orders] as ord
+ON cus.customer_id = ord.customer_id
+
+SELECT * FROM [sales].[customers] as cus
+JOIN [sales].[orders] as ord
+ON cus.customer_id = ord.customer_id
+JOIN [sales].[order_items] as odrit
+ON ord.order_id = odrit.order_id
+
+SELECT * FROM [sales].[customers] as cus
+JOIN [sales].[orders] as ord
+ON cus.customer_id = ord.customer_id
+JOIN [sales].[order_items] as odrit
+ON ord.order_id = odrit.order_id
+JOIN [production].[products] as pro
+ON odrit.product_id = pro.product_id
+
+/* Can you write a query that ranks products based on the number of times they have been ordered, 
+from highest to lowest, using the orders, order_items, and products tables? */
+WITH TOTAL_ORDER AS (
+SELECT COUNT(*) as TTL_order, pro.product_name FROM [sales].[orders] as ord
+JOIN [sales].[order_items] as ordit
+ON ord.order_id = ordit.order_id
+JOIN [production].[products] as pro
+ON pro.product_id = ordit.product_id
+GROUP BY pro.product_name )
+
+SELECT *,
+DENSE_RANK() OVER ( order by ttl_order desc ) FROM TOTAL_ORDER
+
+/* write a query show a list of all customers and their corresponding orders showing customer_id, 
+first_name ,last_name and order_id including only those customers who have not placed any orders */
+SELECT * FROM [sales].[customers] as cus
+LEFT JOIN [sales].[orders] as ord
+ON cus.customer_id = ord.customer_id
+WHERE order_id is null
+
+/* write a query that joins the orders, order_items, and products tables, and shows the product name, 
+the number of times it has been ordered,  and a column indicating whether it has been ordered more than 10 times (1 if yes, 0 if no)? */
+
+WITH GANAA AS (
+SELECT COUNT(*) as ttl_order, pro.product_name FROM [sales].[orders] as ord
+JOIN [sales].[order_items] as ordit
+ON ord.order_id = ordit.order_id
+JOIN [production].[products] as pro
+ON ordit.product_id = pro.product_id
+GROUP BY pro.product_name )
+
+SELECT *,
+CASE
+	WHEN ttl_order > 10 THEN 'Yes'
+	else 'No'
+END as order_status
+FROM GANAA
+
+SELECT SUM(quantity), [production].[stocks].store_id FROM [sales].[stores]
+JOIN [production].[stocks]
+ON [sales].[stores].store_id = [production].[stocks].store_id
+GROUP BY [production].[stocks].store_id
+
+SELECT COUNT(*), [production].[brands].brand_name FROM [production].[products] 
+JOIN [production].[brands]
+ON [production].[products].brand_id = [production].[brands].brand_id
+WHERE list_price < 3500
+GROUP BY [production].[brands].brand_name
+
+SELECT COUNT(*), [production].[categories].category_name FROM [production].[products]
+JOIN [production].[categories]
+ON [production].[products].category_id = [production].[categories].category_id
+WHERE list_price between 2000 and 6000
+GROUP BY [production].[categories].category_name
+
+SELECT COUNT(*), brand_id FROM [production].[products]
+WHERE model_year < 2018
+GROUP BY brand_id
