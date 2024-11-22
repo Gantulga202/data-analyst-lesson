@@ -140,3 +140,45 @@ SELECT COUNT(DISTINCT(item_id)) FROM [sales].[order_items]
 --Write query that find max, min,avg salary for each job_id use  => levelup.employees.
 SELECT MAX(salary) as max_sal, MIN(salary) as min_sal, AVG(salary) as avg_sal, job_id FROM [LEVELUP].[employees] 
 GROUP BY job_id
+
+-----------Day 10 HOMEWORK
+
+/* Display the customer's name, city, and a column called region that shows "West" if the customer lives in 
+California or Washington, "East" if they live in New York or Florida, and "Other" for all other states. FROM [sales].[customers] */
+SELECT first_name, last_name, city,
+CASE
+	WHEN state in ('CA', 'WA') THEN 'West'
+	WHEN state in ('NY', 'FL') THEN 'East'
+	ELSE 'Other'
+END as REGION
+FROM [sales].[customers]
+
+--Show the customer's name and phone number. If the phone number is null, display "No phone number" instead. FROM [sales].[customers]
+SELECT first_name, last_name, 
+CASE
+	WHEN phone is null THEN 'No phone number'
+	ELSE phone
+END as Phone_number
+FROM [sales].[customers]
+
+/* Generate column based on the list price if list price is between 10 to 100 its cheap product_id if list price is between 
+100 to 1000 its average priced product_id if list price is more than 1000 then its expensive product */
+SELECT list_price,
+CASE
+	WHEN list_price > 1000 THEN 'Expensive'
+	WHEN list_price between 100 and 1000 THEN 'Average'
+	WHEN list_price between 10 and 100 THEN 'Cheap'
+	ELSE 'N/A'
+END as Price_range
+FROM [production].[products]
+
+--Write an SQL query to fetch TOP 15 highest prices in products.
+SELECT TOP 15 * FROM [production].[products] order by list_price desc
+
+--How many order placed in May
+SELECT COUNT(*) FROM [sales].[orders]
+WHERE MONTH (order_date) = '5'     --108
+
+--How many order placed for Each year
+SELECT COUNT(*), YEAR(order_date) FROM [sales].[orders] 
+GROUP BY YEAR(order_date)
