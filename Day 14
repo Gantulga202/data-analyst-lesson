@@ -1,0 +1,26 @@
+SELECT A.ename as EmpName, B.ename MangerName FROM INTERVIEW.employee as A
+JOIN INTERVIEW.employee as B ON A.mgr_id = B.emp_id
+WHERE a.ename != b.ename
+
+SELECT AVG(DATEDIFF( MINUTE, CAST( a.TIME as time ), CAST ( b.TIME as time ) )) FROM [INTERVIEW].[SAMSUNG] as A
+JOIN [INTERVIEW].[SAMSUNG] as B on A.SES_ID = B.SES_ID
+WHERE a.EVENT_TYPE = 'SESSION_START' and B.EVENT_TYPE = 'SESSION_END'
+
+SELECT * FROM [INTERVIEW].[SAMSUNG]
+
+SELECT * FROM [dbo].[tech_customers]
+INSERT INTO [dbo].[tech_customers] 
+(first_name, last_name, Phone, email, street, City, state, zip_Code) VALUES
+( 'JOE', 'BIDEN', '987-456-1230', 'gousa@gmail.com', 'ConstituitonAve', 'WashingtonDC', 'DC', '22301' )
+
+UPDATE [dbo].[tech_customers] 
+SET zip_Code = '00000'
+WHERE phone = '999-999-9999'
+	
+--DELETE  / can be roll back, table structure stay / 
+DELETE [dbo].[tech_customers] WHERE first_name = 'ZOOZOO'
+
+--TRUNACE   / can not be roll back, table structure stay /
+TRUNCATE TABLE [dbo].[tech_customers] 
+
+--DROP   / delete record, delete table /
