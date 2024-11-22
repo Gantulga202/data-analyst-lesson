@@ -24,3 +24,45 @@ DELETE [dbo].[tech_customers] WHERE first_name = 'ZOOZOO'
 TRUNCATE TABLE [dbo].[tech_customers] 
 
 --DROP   / delete record, delete table /
+
+--SQL VIEW
+
+CREATE VIEW Gan_view as 
+SELECT SUM(list_price) as ttl_sales, staff.first_name FROM [sales].[staffs] as staff
+JOIN [sales].[orders] as ord
+ON staff.staff_id = ord.staff_id
+JOIN [sales].[order_items] as ordit
+ON ord.order_id = ordit.order_id
+GROUP BY staff.first_name 
+
+SELECT * FROM Gan_view
+
+----------------------HOMEWORK
+
+--1. Rank employees' salaries within their respective departments.
+SELECT department_name, salary, 
+DENSE_RANK() OVER ( partition by department_name order by salary desc ) as sal_rank
+FROM [LEVELUP].[employees] as emp
+JOIN [LEVELUP].[departments] as dep ON emp.department_id = dep.department_id
+
+--2. Categorize employees into "High", "Medium", or "Low" salary ranges.
+SELECT *,
+CASE
+	WHEN NTILE(3) OVER (order by salary desc) = 1 THEN 'High Salary'
+	WHEN NTILE(3) OVER (order by salary desc) = 2 THEN 'Mediu Salary'
+	ELSE 'Low Salary'
+END as Salary_Catergorize
+FROM [LEVELUP].[employees]
+
+--3. Retrieve employees’ names along with their department names.
+SELECT first_name + ' ' + last_name as Employee_Name, department_name FROM [LEVELUP].[employees] as emp
+JOIN [LEVELUP].[departments] as dep ON emp.department_id = dep.department_id
+
+--4. Display employees and their managers’ names.
+SELECT A.first_name as Employee_Name, b.first_name Manager_Name FROM [LEVELUP].[employees] as A 
+JOIN [LEVELUP].[employees] as B ON a.employee_id = b.manager_id
+
+--5. Calculate the total salary paid in each department.
+SELECT SUM(salary) as total_salary, department_name FROM [LEVELUP].[employees] as EMP
+JOIN [LEVELUP].[departments] as dep ON EMP.department_id = dep.department_id
+GROUP BY department_name
