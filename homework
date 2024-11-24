@@ -182,3 +182,28 @@ WHERE MONTH (order_date) = '5'     --108
 --How many order placed for Each year
 SELECT COUNT(*), YEAR(order_date) FROM [sales].[orders] 
 GROUP BY YEAR(order_date)
+
+-----------Day 13 HOMEWORK
+
+--show me how many orders for each shipcountry for each customer  DBO.orders
+SELECT COUNT(*), ord.ShipCountry, cus.ContactName FROM dbo.Orders as ord
+JOIN dbo.Customers as cus
+ON ord.CustomerID = cus.CustomerID
+GROUP BY ord.ShipCountry, cus.ContactName
+
+--show me total sales for each customer
+SELECT SUM(list_price) as ttl_sales, cus.first_name FROM [sales].[customers] as cus
+JOIN [sales].[orders] as ord
+ON cus.customer_id = ord.customer_id
+JOIN [sales].[order_items] as ordit
+ON ord.order_id = ordit.order_id
+GROUP BY cus.first_name
+
+
+--show me total salesamount for each salesperson
+SELECT SUM(list_price) as ttl_sales, staff.first_name FROM [sales].[staffs] as staff
+JOIN [sales].[orders] as ord
+ON staff.staff_id = ord.staff_id
+JOIN [sales].[order_items] as ordit
+ON ord.order_id = ordit.order_id
+GROUP BY staff.first_name 
