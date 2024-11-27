@@ -1,0 +1,52 @@
+CREATE VIEW dbo.vGANA_hw1
+AS
+SELECT department_name, salary, 
+DENSE_RANK() OVER ( partition by department_name order by salary desc ) as sal_rank
+FROM [LEVELUP].[employees] as emp
+JOIN [LEVELUP].[departments] as dep ON emp.department_id = dep.department_id
+
+ALTER VIEW dbo.vGANA_hw1       --/Update records/ 
+AS
+SELECT department_name, salary, 
+DENSE_RANK() OVER ( partition by department_name order by salary desc ) as sl_rank
+FROM [LEVELUP].[employees] as emp
+JOIN [LEVELUP].[departments] as dep ON emp.department_id = dep.department_id
+
+CREATE VIEW dbo.vGANA_hw2
+AS 
+SELECT *,
+CASE
+	WHEN NTILE(3) OVER (order by salary desc) = 1 THEN 'High Salary'
+	WHEN NTILE(3) OVER (order by salary desc) = 2 THEN 'Medium Salary'
+	ELSE 'Low Salary'
+END as Salary_Catergorize
+FROM [LEVELUP].[employees]
+
+SELECT * FROM [dbo].[Erka_ViewHW]
+
+DROP VIEW dbo.vGANA_hw1
+DROP VIEW dbo.vGANA_hw2
+
+SELECT * FROM [sales].[customers]
+
+SELECT COUNT(*), item_id FROM [sales].[order_items] GROUP BY item_id
+
+SELECT COUNT(DISTINCT item_id) FROM [sales].[order_items]
+
+SELECT * FROM [LESSON].[loan_data]
+
+CREATE INDEX idx_Ganaa
+ON [LESSON].[loan_data] (BorrName)
+
+------------TRIGGER
+
+CREATE TABLE LEVELUP.GE_CAR_SALES (
+	Product_id INT primary key,
+	Car_name VARCHAR(250) not null,
+	Car_Model VARCHAR(250) not null,
+	Category VARCHAR(250) not null,
+	Product_year date not null,
+	Price DECIMAL (10, 2),
+	)
+
+SELECT * FROM [LEVELUP].[G_CAR_SALES]
