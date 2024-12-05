@@ -1,0 +1,4 @@
+SELECT cus.customer_id, first_name, last_name, SUM(list_price) as TTL_sales FROM sales.customers as cus
+JOIN sales.orders as ord ON cus.customer_id = ord.customer_id
+JOIN sales.order_items as orditem ON ord.order_id = orditem.order_id
+GROUP BY cus.customer_id, first_name, last_name
