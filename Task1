@@ -1,0 +1,28 @@
+SELECT LOCATION, MAX(AGE) as oldest_customer FROM [LESSON].[CUSTOMERS]
+GROUP BY LOCATION
+ORDER BY 2 desc
+
+----------------------------TASK 1
+
+WITH Temp_CTE AS (
+SELECT ID, NAME, AGE, LOCATION, 
+DENSE_RANK() OVER (PARTITION BY LOCATION order by age desc ) Oldest_Cus FROM [LESSON].[CUSTOMERS]
+)
+SELECT * FROM Temp_CTE WHERE Oldest_Cus = 1
+
+----------------------------TASK 2
+
+SELECT [ID], [NAME], [AGE], [LOCATION], [SALARY],
+       MAX([SALARY]) OVER (PARTITION BY [LOCATION]) AS Highest_Salary,
+       MIN([SALARY]) OVER (PARTITION BY [LOCATION]) AS Lowest_Salary
+FROM [LESSON].[CUSTOMERS];
+
+
+----------------------------TASK 3
+
+SELECT ID, NAME, AGE, LOCATION, salary, CASE
+    WHEN SALARY < 100000 THEN 'low_salary'
+    WHEN SALARY between 100000 and 200000 THEN 'medium_salary'
+    ELSE 'high_salary'
+END as Salary_Category
+FROM [LESSON].[CUSTOMERS]
