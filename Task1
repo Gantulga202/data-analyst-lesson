@@ -17,7 +17,6 @@ SELECT [ID], [NAME], [AGE], [LOCATION], [SALARY],
        MIN([SALARY]) OVER (PARTITION BY [LOCATION]) AS Lowest_Salary
 FROM [LESSON].[CUSTOMERS];
 
-
 ----------------------------TASK 3
 
 SELECT ID, NAME, AGE, LOCATION, salary, CASE
