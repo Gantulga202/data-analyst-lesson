@@ -1,0 +1,44 @@
+select * from [dbo].[Tech_CustomerData]
+
+select  
+TABLE_SCHEMA
+,table_name
+,column_name
+,ORDINAL_POSITION
+,is_nullable
+,DATA_TYPE
+,CHARACTER_MAXIMUM_LENGTH
+,NUMERIC_PRECISION
+,NUMERIC_SCALE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Tech_CustomerData'
+
+select RatingCode, Count(*) from [dbo].[Tech_ProductData]
+group by RatingCode
+
+Select * from [dbo].[Tech_LookupTable]
+where LookupCode in ('1','2','3','4','5' )
+
+
+select * from [dbo].[Tech_ProductData]
+
+select  
+TABLE_SCHEMA
+,table_name
+,column_name
+,ORDINAL_POSITION
+,is_nullable
+,DATA_TYPE
+,CHARACTER_MAXIMUM_LENGTH
+,NUMERIC_PRECISION
+,NUMERIC_SCALE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Tech_ProductData'
+
+select  
+TABLE_SCHEMA
+,table_name
+,column_name
+
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Tech_CustomerData'
